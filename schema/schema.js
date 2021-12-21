@@ -7,6 +7,7 @@ const typeDefs = gql`
     description: String
     createdAt: String
     author: User
+    isFinished: Boolean
   }
 
   type User {
@@ -27,14 +28,14 @@ const typeDefs = gql`
 
   ## write
   type Mutation {
-    createUser(id: ID!, name: String, username: String, password: String): User
+    createUser(name: String, username: String, password: String): User
     createTask(
-      id: ID!
       title: String
       description: String
       createdAt: String
       author: ID!
     ): Task
+    updateTaskState(id: ID!, newState: Boolean): Task
   }
 `;
 

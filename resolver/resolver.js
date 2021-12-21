@@ -1,37 +1,30 @@
-const { users, todos } = require("../data/dummy");
-
 const resolvers = {
   // Query
   Query: {
-    todos: (parent, args) =>
-      todos.filter((element) => element.author === args.uid),
-    task: (parent, args) => todos.find((element) => element.id == args.id),
-    user: (parent, args) =>
-      users.find(
-        (element) =>
-          element.username === args.username &&
-          element.password === args.password
-      ),
+    todos: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.getAllTasks(args.uid),
+    task: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.getTaskById(args.id),
+    user: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.authUser(args.username, args.password),
   },
   Task: {
-    author: (parent, args) =>
-      users.find((element) => element.id === parent.author),
+    author: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.getUserById(parent.author),
   },
   User: {
-    todos: (parent, args) =>
-      todos.filter((element) => element.author === parent.id),
+    todos: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.getAllTasks(parent.id),
   },
 
   // Mutation
   Mutation: {
-    createUser: (parent, args) => {
-      users.push(args);
-      return args;
-    },
-    createTask: (parent, args) => {
-      todos.push(args);
-      return args;
-    },
+    createUser: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.createUser(args),
+    createTask: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.createTask(args),
+    updateTaskState: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.updateTaskState(args),
   },
 };
 
