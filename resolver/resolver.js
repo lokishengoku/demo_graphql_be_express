@@ -25,6 +25,12 @@ const resolvers = {
       await mongoDataMethods.createTask(args),
     updateTaskState: async (parent, args, { mongoDataMethods }) =>
       await mongoDataMethods.updateTaskState(args),
+    updateTask: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.updateTask(args),
+    deleteTask: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.deleteTask(args),
+    changePassword: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.changePassword(args),
   },
 };
 

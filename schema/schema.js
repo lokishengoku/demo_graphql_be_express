@@ -8,6 +8,7 @@ const typeDefs = gql`
     createdAt: String
     author: User
     isFinished: Boolean
+    type: Int
   }
 
   type User {
@@ -34,8 +35,18 @@ const typeDefs = gql`
       description: String
       createdAt: String
       author: ID!
+      type: Int
     ): Task
     updateTaskState(id: ID!, newState: Boolean): Task
+    updateTask(
+      id: ID!
+      title: String
+      description: String
+      createdAt: String
+      type: Int
+    ): Task
+    deleteTask(id: ID!): Task
+    changePassword(id: ID!, currentPw: String, newPw: String): User
   }
 `;
 

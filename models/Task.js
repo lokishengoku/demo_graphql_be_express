@@ -17,6 +17,9 @@ const TaskSchema = new schema({
   isFinished: {
     type: Boolean,
   },
+  type: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("tasks", TaskSchema);
